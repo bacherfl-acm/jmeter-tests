@@ -1,7 +1,7 @@
 pipeline {
     parameters {
         string(name: 'SCRIPT_NAME',         defaultValue: 'basiccheck.jmx', description: 'The script you want to execute', trim: true)
-        string(name: 'SERVER_URL',          defaultValue: 'user.jx-staging.35.233.18.9.nip.io', description: 'Please enter the URI or the IP of your service you want to run your test against', trim: true)
+        string(name: 'SERVER_URL',          defaultValue: 'user.{APP_STAGING_DOMAIN}', description: 'Please enter the URI or the IP of your service you want to run your test against', trim: true)
         string(name: 'SERVER_PORT',         defaultValue: '80', description: 'Please enter the port of the endpoint', trim: true)
         string(name: 'CHECK_PATH',          defaultValue: '/health', description: 'This parameter is only good for scripts that use this parameter, e.g: basiccheck.jmx', trim: true)
         string(name: 'VUCount',             defaultValue: '1', description: 'Number of Virtual Users to be executed. ', trim: true)
