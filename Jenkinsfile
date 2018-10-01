@@ -10,6 +10,8 @@ pipeline {
         string(name: 'DT_LTN',              defaultValue: 'DTLoadTest', description: 'For scripts that have been setup to pass x-dynatrace-test this will pass the LTN Request Attribute', trim: true)
         choice(name: 'FUNC_VALIDATION',     choices: 'yes\nno', description: 'BREAK the Pipeline if there is a functional issue?' )
         string(name: 'AVG_RT_VALIDATION',   defaultValue: '0', description: 'BREAK the Pipeline if the average response time exceeds the passed value. 0 means NO VALIDATION')
+        string(name: 'RETRY_ON_ERROR',      defaultValue: '0', description: 'How many times to retry on error? Especially useful for the initial health check as it will take a while until the app is up and running')
+        string(name: 'RETRY_WAIT',          defaultValue: '5000', description: 'How long to wait between retries in milliseconds')
      }
 
     agent {
