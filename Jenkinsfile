@@ -35,7 +35,16 @@ pipeline {
                     // lets run the test and put the console output to output.txt
                     sh "echo 'execute the jmeter test and console output goes to output.txt'"
                     sh "/jmeter/bin/jmeter.sh -n -t ./scripts/$SCRIPT_NAME -e -o results -l result.tlf -JSERVER_URL='$SERVER_URL' -JDT_LTN='$DT_LTN' -JVUCount='$VUCount' -JLoopCount='$LoopCount' -JCHECK_PATH='$CHECK_PATH' -JSERVER_PORT='$SERVER_PORT' -JThinkTime='$ThinkTime' > output.txt"
+                    
+                    sh "cat output.txt"
+                }
 
+                // parse the result.tlf and archive the artifacts
+                perfReport percentiles: '0,50,90,100', sourceDataFiles: 'result.tlf'
+                archiveArtifacts artifacts:'*.*/**'                
+
+                // now we validate
+                container('jmeter') {
                     // Lets do the functional validation if FUNC_VALIDATION=='yes'
                     sh '''
                         ERROR_COUNT=$(awk '/summary =/ {print $15;}' output.txt)
@@ -57,10 +66,6 @@ pipeline {
                         fi
                     '''
                 }
-
-                // parse the result.tlf and archive the artifacts
-                perfReport percentiles: '0,50,90,100', sourceDataFiles: 'result.tlf'
-                archiveArtifacts artifacts:'*.*/**'                
             }
         }
     }
