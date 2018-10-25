@@ -13,17 +13,14 @@ pipeline {
         string(name: 'RETRY_ON_ERROR',      defaultValue: '0', description: 'How many times to retry on error? Especially useful for the initial health check as it will take a while until the app is up and running')
         string(name: 'RETRY_WAIT',          defaultValue: '5000', description: 'How long to wait between retries in milliseconds')
     }
-    
     agent {
         label "jenkins-jmeter"
     }
-
     environment {
         ORG               = 'acm-workshop'
         APP_NAME          = 'jmeter-as-container'
         GIT_PROVIDER      = 'github.com'        
     }
-
     stages {
         stage('RunTest') {
             steps
