@@ -59,7 +59,7 @@ pipeline {
                     sh '''
                         AVG_RT=$(awk '/summary =/ {print $9;}' output.txt)
                         echo "AVG_RT = $AVG_RT"
-                        if [ $AVG_RT_VALIDATION -gt 0 ] && [ $AVG_RT_VALIDATION -gt $AVG_RT ]
+                        if [ $AVG_RT_VALIDATION -gt 0 ] && [ $AVG_RT -gt $AVG_RT_VALIDATION ]
                         then
                             echo "Response Time Threshold Violation: $AVG_RT > $$AVG_RT_VALIDATION"
                             exit 1
